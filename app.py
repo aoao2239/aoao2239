@@ -97,7 +97,7 @@ person = {
 
 @app.route('/')
 def cv(person=person):
-    return render_template('index.html', person=person)
+    return render_template('index2.html', person=person)
 
 
 
@@ -108,7 +108,7 @@ def cb():
    
 @app.route('/chart')
 def index():
-	return render_template('chartsajax.html',  graphJSON=gm())
+	return render_template('index2.html',  graphJSON=gm())
 
 def gm(country='United Kingdom'):
 	df = pd.DataFrame(px.data.gapminder())
@@ -170,7 +170,7 @@ def main():
 
 	layout = {'title': '<b>意见挖掘</b>'}
 
-	return render_template('sentiment.html', graph_values=graph_values, layout=layout)
+	return render_template('index2.html', graph_values=graph_values, layout=layout)
 
 
 if __name__ == '__main__':
