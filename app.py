@@ -57,6 +57,17 @@ person = {
             'timeframe' : 'October 2015 - October 2016'
         }
     ],
+    'project':[
+        {"name":"project1",
+         "text":"使用语言"
+        },
+{"name":"project2",
+         "text":"使用语言"
+        }   ,
+{"name":"project3",
+         "text":"使用语言"
+        }
+    ],
     'education' : [
         {
             'university': 'Paris Diderot',
@@ -72,6 +83,7 @@ person = {
             'mention' : 'Bien',
             'timeframe' : '2015'
         },
+
         {
             'university': 'Lycée Turgot - Paris Sorbonne',
             'degree': 'CPGE Economie & Gestion',

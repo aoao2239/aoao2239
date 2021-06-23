@@ -13,78 +13,63 @@
 <div class="container">
   <div class="header">
     <div class="full-name">
-      <span class="first-name">慧</span> 
-      <span class="last-name">慧</span>
+      <span class="first-name">{{person.first_name}}</span> 
+      <span class="last-name">{{person.last_name}}</span>
     </div>
     <div class="contact-info">
       <span class="email">邮箱: </span>
-      <span class="email-val">11111111111111</span>
+      <span class="email-val">{{person.email}}</span>
       <span class="separator"></span>
       <span class="phone">电话: </span>
-      <span class="phone-val">111-222-3333</span>
+      <span class="phone-val">{{person.tel}}</span>
     </div>
     
     <div class="about">
-      <span class="position">软件开发</span>
+      <span class="position">{{person.job}}</span>
       <span class="desc">
-      	软件开发描述
+      	{{person.description}}
              </span>
     </div>
   </div>
    <div class="details">
     <div class="section">
       <div class="section__title">Experience</div>
+      {%for x in person.experiences%}
       <div class="section__list">
         <div class="section__list-item">
           <div class="left">
-            <div class="name">HUNU1</div>
-            <div class="addr">china</div>
-            <div class="duration">Jan 2011 - Feb 2015</div>
+            <div class="name">{{x.title}}</div>
+            <div class="addr">{{x.company}}</div>
+            <div class="duration">{{x.timeframe}}</div>
           </div>
           <div class="right">
-            <div class="name">Fr developer</div>
-            <div class="desc">did This and that</div>
+            <!--<div class="name">Fr developer</div>-->
+            <div class="desc">{{x.description}}</div>
           </div>
         </div>
-                <div class="section__list-item">
-          <div class="left">
-            <div class="name">Akount</div>
-            <div class="addr">San Monica, CA</div>
-            <div class="duration">Jan 2011 - Feb 2015</div>
-          </div>
-          <div class="right">
-            <div class="name">Fr developer</div>
-            <div class="desc">did This and that</div>
-          </div>
-        </div>
+        {%endfor%}
+        
 
       </div>
     </div>
+    
     <div class="section">
       <div class="section__title">Education</div>
+      {%for y in person.education%}
       <div class="section__list">
         <div class="section__list-item">
           <div class="left">
-            <div class="name">HBNU</div>
-            <div class="addr">中国,china</div>
-            <div class="duration">Jan 2018 - Feb 2022</div>
+            <div class="name">{{y.university}}</div>
+            <div class="addr">HBNU</div>
+            <div class="duration">{{y.timeframe}}</div>
           </div>
           <div class="right">
-            <div class="name">java开发者</div>
-            <div class="desc">做了啥!</div>
+            <!--<div class="name">java开发者</div>-->
+            <div class="desc">描述:<br>{{y.description}}</div>
           </div>
         </div>
-        <div class="section__list-item">
-          <div class="left">
-            <div class="name">Akount</div>
-            <div class="addr">San Monica, CA</div>
-            <div class="duration">Jan 2011 - Feb 2015</div>
-          </div>
-          <div class="right">
-            <div class="name">Fr developer</div>
-            <div class="desc">did This and that</div>
-          </div>
-        </div>
+        {%endfor%}
+        
 
       </div>
       
@@ -92,15 +77,13 @@
      <div class="section">
       <div class="section__title">项目</div> 
        <div class="section__list">
+       {% for i in person.project %}
          <div class="section__list-item">
-           <div class="name">项目一</div>
-           <div class="text">项目一描述   </div>
-         
-         <div class="section__list-item">
-                    <div class="name">项目二</div>
-           <div class="text">项目二描述  </div>
+           <div class="name">{{i.name}}</div>
+           <div class="text"> {{i.text}}</div>
          </div>
-       </div>
+        {%endfor%}
+       
     </div>
      <div class="section">
        <div class="section__title">技能</div>
@@ -110,18 +93,15 @@
            javaweb
              </div></div>
            <div class="right">
-                          <input  id="ck1" type="checkbox" checked/>
-
+               <input  id="ck1" type="checkbox" checked/>
              <label for="ck1"></label>
-                          <input id="ck2" type="checkbox" checked/>
-
+               <input id="ck2" type="checkbox" checked/>
               <label for="ck2"></label>
-                         <input id="ck3" type="checkbox"  checked/>
-
+               <input id="ck3" type="checkbox"  checked/>
               <label for="ck3"></label>
-                           <input id="ck4" type="checkbox" />
+               <input id="ck4" type="checkbox" />
             <label for="ck4"></label>
-                          <input id="ck5" type="checkbox" />
+              <input id="ck5" type="checkbox" />
               <label for="ck5"></label>
 
            </div>
