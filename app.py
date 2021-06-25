@@ -111,29 +111,51 @@ person = {
 def cv(person=person):
     return render_template('index2.html', person=person)
 
-
-
-
 @app.route('/callback', methods=['POST', 'GET'])
 def cb():
     return gm(int(request.args.get('data')))
    
 @app.route('/chart')
 def index():
-    return render_template('chartsajax.html',  graphJSON=gm(),graphJSON1=gm1(),graphJSON3=gm3())
+    return render_template('chartsajax.html',  graphJSON=gm(),graphJSON1=gm1(),graphJSON3=gm3(),graphJSON4=gm4(),graphJSON5=gm5(),graphJSON6=gm6(),graphJSON7=gm7(),
+                           graphJSON8=gm8(),graphJSON9=gm9(),graphJSON10=gm10())
 #1 花的种类花萼的宽和高的分布的散点图
 def gm(species_id=1):
     df = pd.DataFrame(px.data.iris())
     fig=px.scatter(df[df["species_id"]==species_id], x="sepal_width", y="sepal_length", color="species")
     graphJSON = json.dumps(fig, cls = plotly.utils.PlotlyJSONEncoder)
     return graphJSON
-
-#3 总体分布图
+#3 三种花萼总体分布图
 def gm3():
     df = pd.DataFrame(px.data.iris())
-    fig=px.scatter(df, x="sepal_width", y="sepal_length", color="species")
+    fig=px.scatter(
+    df,
+    x="sepal_width",
+    y="sepal_length",
+    color="species",
+    marginal_x="histogram",
+    marginal_y="rug")
     graphJSON3 = json.dumps(fig, cls = plotly.utils.PlotlyJSONEncoder)
     return graphJSON3
+#6 三种花萼的散点矩阵图
+def gm6():
+    df = pd.DataFrame(px.data.iris())
+    fig=px.scatter_matrix(df,  # 传入绘图数据
+                  dimensions=["sepal_width","sepal_length","petal_width","petal_length"],  # 维度设置
+                  color="species")  # 颜色取值
+    graphJSON6 = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return graphJSON6
+
+#8 鸢尾花的花萼宽和花萼高的等高线图
+def gm8():
+    df=pd.DataFrame(px.data.iris())
+    fig=px.density_contour(df,  # 数据集
+                   x="sepal_width",  # xy轴
+                   y="sepal_length",
+                   color="species"  # 颜色取值
+                  )
+    graphJSON = json.dumps(fig, cls = plotly.utils.PlotlyJSONEncoder)
+    return graphJSON
 
 #2 年增长pop人数
 def gm1():
@@ -141,6 +163,78 @@ def gm1():
     fig=px.bar(df,x = "continent",y= "pop",color = "continent",animation_frame = "year",animation_group = "country",range_y = [0, 4000000000])
     graphJSON1 = json.dumps(fig, cls = plotly.utils.PlotlyJSONEncoder)
     return graphJSON1
+
+#7 各地区的每年的
+def gm7():
+    df = px.data.gapminder()
+    fig =px.choropleth(
+        df,  # 数据
+        locations="iso_alpha",  # 简称
+        color="lifeExp",  # 颜色取值
+        hover_name="country",  # 悬停数据
+        animation_frame="year",  # 播放按钮设置
+        color_continuous_scale=px.colors.sequential.Plasma,  # 颜色变化取值
+        projection="natural earth"  # 使用的地图设置
+        )
+    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return graphJSON
+#9 基于line_geo线型地图
+def gm9():
+    df = pd.DataFrame(px.data.gapminder())
+    fig =px.line_geo(
+        df[df["year"]=="2002"],
+        locations="iso_alpha",
+        color=px.colors.sequential.Plasma,
+    projection="orthographic")
+    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return graphJSON
+
+#10 矩阵式树状结构图
+def gm10():
+    df = px.data.gapminder()
+    fig =px.treemap(
+    df[df["year"]=="2002"], # 数据
+    path=[px.Constant('world'), 'continent', 'country'],   # 绘图路径：world---continent---country
+    values='pop',  # 数据取值
+    color='pop',   # 颜色取值
+    hover_data=['iso_alpha'])  # 显示数据：国家简称
+    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return graphJSON
+# 4 订单流水图
+def gm4():
+    df=px.data.tips()
+    fig=px.scatter(df, x="total_bill", y="tip", color="size", facet_col="sex",
+           color_continuous_scale=px.colors.sequential.Viridis,
+           render_mode="webgl")
+    graphJSON4 = json.dumps(fig, cls = plotly.utils.PlotlyJSONEncoder)
+    return graphJSON4
+#5 2013年蒙特利尔市长选举,不同区域结果图
+def gm5():
+    df=px.data.election()
+    fig=px.scatter_3d(df, x="Joly", y="Coderre", z="Bergeron", color="winner",
+              size="total", hover_name="district",symbol="result",
+              color_discrete_map = {"Joly": "blue", "Bergeron": "green",
+              "Coderre":"red"})
+    graphJSON5 = json.dumps(fig, cls = plotly.utils.PlotlyJSONEncoder)
+    return graphJSON5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
