@@ -116,73 +116,91 @@ def cv(person=person):
 
 @app.route('/callback', methods=['POST', 'GET'])
 def cb():
-	return gm(request.args.get('data'))
+    return gm(int(request.args.get('data')))
    
 @app.route('/chart')
 def index():
-	return render_template('index2.html',  graphJSON=gm())
+    return render_template('chartsajax.html',  graphJSON=gm(),graphJSON1=gm1(),graphJSON3=gm3())
+#1 花的种类花萼的宽和高的分布的散点图
+def gm(species_id=1):
+    df = pd.DataFrame(px.data.iris())
+    fig=px.scatter(df[df["species_id"]==species_id], x="sepal_width", y="sepal_length", color="species")
+    graphJSON = json.dumps(fig, cls = plotly.utils.PlotlyJSONEncoder)
+    return graphJSON
 
-def gm(country='United Kingdom'):
-	df = pd.DataFrame(px.data.gapminder())
+#3 总体分布图
+def gm3():
+    df = pd.DataFrame(px.data.iris())
+    fig=px.scatter(df, x="sepal_width", y="sepal_length", color="species")
+    graphJSON3 = json.dumps(fig, cls = plotly.utils.PlotlyJSONEncoder)
+    return graphJSON3
 
-	fig = px.line(df[df['country']==country], x="year", y="gdpPercap")
+#2 年增长pop人数
+def gm1():
+    df=px.data.gapminder()
+    fig=px.bar(df,x = "continent",y= "pop",color = "continent",animation_frame = "year",animation_group = "country",range_y = [0, 4000000000])
+    graphJSON1 = json.dumps(fig, cls = plotly.utils.PlotlyJSONEncoder)
+    return graphJSON1
 
-	graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-	return graphJSON
+
+
+
+
+
 
 
 @app.route('/senti')
 def main():
-	text = ""
-	values = {"positive": 0, "negative": 0, "neutral": 0}
+    text = ""
+    values = {"positive": 0, "negative": 0, "neutral": 0}
 
-	with open('ask_politics.csv', 'rt') as csvfile:
-		reader = csv.DictReader(csvfile, delimiter=',', quotechar='"')
-		for idx, row in enumerate(reader):
-			if idx > 0 and idx % 2000 == 0:
-				break
-			if  'text' in row:
-				nolinkstext = re.sub(r'''(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))''', '', row['text'], flags=re.MULTILINE)
-				text = nolinkstext
+    with open('ask_politics.csv', 'rt') as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=',', quotechar='"')
+        for idx, row in enumerate(reader):
+            if idx > 0 and idx % 2000 == 0:
+                break
+            if  'text' in row:
+                nolinkstext = re.sub(r'''(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))''', '', row['text'], flags=re.MULTILINE)
+                text = nolinkstext
 
-			blob = TextBlob(text)
-			for sentence in blob.sentences:
-				sentiment_value = sentence.sentiment.polarity
-				if sentiment_value >= -0.1 and sentiment_value <= 0.1:
-					values['neutral'] += 1
-				elif sentiment_value < 0:
-					values['negative'] += 1
-				elif sentiment_value > 0:
-					values['positive'] += 1
+            blob = TextBlob(text)
+            for sentence in blob.sentences:
+                sentiment_value = sentence.sentiment.polarity
+                if sentiment_value >= -0.1 and sentiment_value <= 0.1:
+                    values['neutral'] += 1
+                elif sentiment_value < 0:
+                    values['negative'] += 1
+                elif sentiment_value > 0:
+                    values['positive'] += 1
 
-	values = sorted(values.items(), key=operator.itemgetter(1))
-	top_ten = list(reversed(values))
-	if len(top_ten) >= 11:
-		top_ten = top_ten[1:11]
-	else :
-		top_ten = top_ten[0:len(top_ten)]
+    values = sorted(values.items(), key=operator.itemgetter(1))
+    top_ten = list(reversed(values))
+    if len(top_ten) >= 11:
+        top_ten = top_ten[1:11]
+    else :
+        top_ten = top_ten[0:len(top_ten)]
 
-	top_ten_list_vals = []
-	top_ten_list_labels = []
-	for language in top_ten:
-		top_ten_list_vals.append(language[1])
-		top_ten_list_labels.append(language[0])
+    top_ten_list_vals = []
+    top_ten_list_labels = []
+    for language in top_ten:
+        top_ten_list_vals.append(language[1])
+        top_ten_list_labels.append(language[0])
 
-	graph_values = [{
-					'labels': top_ten_list_labels,
-					'values': top_ten_list_vals,
-					'type': 'pie',
-					'insidetextfont': {'color': '#FFFFFF',
-										'size': '14',
-										},
-					'textfont': {'color': '#FFFFFF',
-										'size': '14',
-								},
-					}]
+    graph_values = [{
+                    'labels': top_ten_list_labels,
+                    'values': top_ten_list_vals,
+                    'type': 'pie',
+                    'insidetextfont': {'color': '#FFFFFF',
+                                        'size': '14',
+                                        },
+                    'textfont': {'color': '#FFFFFF',
+                                        'size': '14',
+                                },
+                    }]
 
-	layout = {'title': '<b>意见挖掘</b>'}
+    layout = {'title': '<b>意见挖掘</b>'}
 
-	return render_template('index2.html', graph_values=graph_values, layout=layout)
+    return render_template('index2.html', graph_values=graph_values, layout=layout)
 
 
 if __name__ == '__main__':

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script>
         function cb(selection) {
             $.getJSON({
@@ -19,17 +19,30 @@
 </head>
 
 <body style="font-family:arial, sans-serif">
-    <h1>1952-2007年的各国GDP可视化</h1>
-    <h2>输入国家如：India或China（大写字母开头）</h2>
+  <div>  <h1>花萼长和花萼宽</h1>
+    <h2>请输入花的种类编号:1、2、3 来分别查看不同种类的画的花萼长和宽的散点图</h2>
     
     <input type="text" id="fname" name="fname" onchange="cb(this.value)">
     <div id="chart" class="chart"></div>
-</body>
+
+ <div id="chart3" class="chart"></div>
 
 <script>
-    d = {{ graphJSON | safe }};
-    Plotly.newPlot('chart', d, {});
+    d3 = {{ graphJSON3 | safe }} ;
+    Plotly.newPlot('chart3', d3, {});
 </script>
 
+</div>
+<div>
+ <h1>各地区人口逐年增长图</h1>
+    <div id="chart1" class="chart"></div>
+<script>
+    d1 = {{ graphJSON1 | safe }} ;
+    Plotly.newPlot('chart1', d1, {});
+</script>
+</div>
+
+
+</body>
 
 </html>
