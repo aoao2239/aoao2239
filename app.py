@@ -4,108 +4,70 @@ import pandas as pd
 import json
 import plotly
 import plotly.express as px
-
 import csv, re, operator
-# from textblob import TextBlob
 
 app = Flask(__name__)
 
 person = {
-    'first_name': 'Nohossat',
-    'last_name' : 'TRAORE',
-    'address' : '9 rue Léon Giraud · PARIS · FRANCE',
-    'job': 'Web developer',
-    'tel': '0678282923',
-    'email': 'nohossat.tra@yahoo.com',
-    'description' : 'Suite à une expérience internationale en développement web et dans le domaine des arts, l’impact de l’intelligence artificielle dans nos vies me surprend de jour en jour. \n Aujourd’hui, je souhaite changer de cap et comprendre les secrets que recèlent nos données. J’aimerais mettre à profit ces découvertes au service des entreprises/associations à dimension sociale.',
-    'social_media' : [
-        {
-            'link': 'https://www.facebook.com/nono',
-            'icon' : 'fa-facebook-f'
-        },
-        {
-            'link': 'https://github.com/nono',
-            'icon' : 'fa-github'
-        },
-        {
-            'link': 'linkedin.com/in/nono',
-            'icon' : 'fa-linkedin-in'
-        },
-        {
-            'link': 'https://twitter.com/nono',
-            'icon' : 'fa-twitter'
-        }
-    ],
+    'first_name': '熊',
+    'last_name' : '佳慧',
+    'address' : '湖北师范大学',
+    'job': '后端工程师,微信小程序开发',
+    'tel': '000-000-000',
+    'email': 'qq邮箱',
+    'description' : '描述语句',
     'img': 'img/img_nono.jpg',
     'experiences' : [
         {
-            'title' : 'Web Developer',
-            'company': 'AZULIK',
-            'description' : 'Project manager and lead developer for several AZULIK websites.',
-            'timeframe' : 'July 2018 - November 2019'
+            'title' :"飞机航班系统",
+            'company': '学期实训',
+            'description' : '通过运用java知识,进行文件读写操作,以及可视化界面操作,达到对机票航班的预订购买,订单的支付删除操作.',
+            'timeframe' : ' 2018/12 -  2019/1'
         },
         {
-            'title' : 'Freelance Web Developer',
-            'company': 'Independant',
-            'description' : 'Create Wordpress websites for small and medium companies. ',
-            'timeframe' : 'February 2017 - Present'
+            'title' : '团子记账微信小程序',
+            'company': '3人小团体',
+            'description' : '这是一个记账类微信小程序,可以实现设置预算,记录账单,获得自己的消费分类数据统计,账单清单等部分',
+            'timeframe' : '2021/6月至今'
         },
         {
-            'title' : 'Sharepoint Intern',
-            'company': 'ALTEN',
-            'description' : 'Help to manage a 600 Sharepoint sites platform (audit, migration to Sharepoint newer versions)',
-            'timeframe' : 'October 2015 - October 2016'
+            'title' : '网上商城',
+            'company': '个人',
+            'description' : '运用javaweb,jdbc,springmvc框架,实现简单的网上购物商城,可进行登陆分类购买订单管理',
+            'timeframe' : '2020 - 2021'
         }
     ],
     'project':[
-        {"name":"project1",
-         "text":"使用语言"
+        {"name":"英文取名大数据分析",
+         "text":"python/爬虫开发"
         },
-{"name":"project2",
-         "text":"使用语言"
+{"name":"网上商城",
+         "text":"javaweb/Mysql/springMVC/JSP"
         }   ,
-{"name":"project3",
-         "text":"使用语言"
+{"name":"机票航班系统",
+         "text":"java/JDBC"
         }
     ],
     'education' : [
         {
-            'university': 'Paris Diderot',
-            'degree': 'Projets informatiques et Startégies d\'entreprise (PISE)',
+            'university': '湖北师范大学',
+            'degree': '软件工程22届本科毕业生',
             'description' : 'Gestion de projets IT, Audit, Programmation',
-            'mention' : 'Bien',
-            'timeframe' : '2015 - 2016'
-        },
-        {
-            'university': 'Paris Dauphine',
-            'degree': 'Master en Management global',
-            'description' : 'Fonctions supports (Marketing, Finance, Ressources Humaines, Comptabilité)',
-            'mention' : 'Bien',
-            'timeframe' : '2015'
-        },
-
-        {
-            'university': 'Lycée Turgot - Paris Sorbonne',
-            'degree': 'CPGE Economie & Gestion',
-            'description' : 'Préparation au concours de l\'ENS Cachan, section Economie',
-            'mention' : 'N/A',
-            'timeframe' : '2010 - 2012'
+            'mention' : 'aoao',
+            'timeframe' : '2018- 2022'
         }
     ],
     'programming_languages' : {
-        'HMTL' : ['fa-html5', '100'], 
-        'CSS' : ['fa-css3-alt', '100'], 
-        'SASS' : ['fa-sass', '90'], 
-        'JS' : ['fa-js-square', '90'],
-        'Wordpress' : ['fa-wordpress', '80'],
-        'Python': ['fa-python', '70'],
-        'Mongo DB' : ['fa-database', '60'],
-        'MySQL' : ['fa-database', '60'],
-        'NodeJS' : ['fa-node-js', '50']
+        'java':3,
+        "javaweb":3,
+        'Python': 2,
+        'MySQL' : 3,
+        'HMTL' : 1,
+        'CSS' : 1,
+        'JS' :1
     },
-    'languages' : {'French' : 'Native', 'English' : 'Professional', 'Spanish' : 'Professional', 'Italian' : 'Limited Working Proficiency'},
-    'interests' : ['Dance', 'Travel', 'Languages']
-}
+    'languages' : {'普通话' : '二甲', 'English' : "CET4"},
+    }
 
 @app.route('/')
 def cv(person=person):
@@ -118,7 +80,7 @@ def cb():
 @app.route('/chart')
 def index():
     return render_template('chartsajax.html',  graphJSON=gm(),graphJSON1=gm1(),graphJSON3=gm3(),graphJSON4=gm4(),graphJSON5=gm5(),graphJSON6=gm6(),graphJSON7=gm7(),
-                           graphJSON8=gm8(),graphJSON9=gm9(),graphJSON10=gm10())
+                           graphJSON8=gm8(),graphJSON9=gm9(),graphJSON10=gm10(),graphJSON11=gm11(),graphJSON12=gm12())
 #1 花的种类花萼的宽和高的分布的散点图
 def gm(species_id=1):
     df = pd.DataFrame(px.data.iris())
@@ -181,19 +143,16 @@ def gm7():
 #9 基于line_geo线型地图
 def gm9():
     df = pd.DataFrame(px.data.gapminder())
-    fig =px.line_geo(
-        df[df["year"]=="2002"],
-        locations="iso_alpha",
-        color=px.colors.sequential.Plasma,
-    projection="orthographic")
+    fig =px.line_geo(df.query("year==2007"), locations="iso_alpha",
+            color="continent", projection="orthographic")
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
 #10 矩阵式树状结构图
 def gm10():
-    df = px.data.gapminder()
+    df = pd.DataFrame(px.data.gapminder())
     fig =px.treemap(
-    df[df["year"]=="2002"], # 数据
+    df.query("year==2007"), # 数据
     path=[px.Constant('world'), 'continent', 'country'],   # 绘图路径：world---continent---country
     values='pop',  # 数据取值
     color='pop',   # 颜色取值
@@ -208,6 +167,21 @@ def gm4():
            render_mode="webgl")
     graphJSON4 = json.dumps(fig, cls = plotly.utils.PlotlyJSONEncoder)
     return graphJSON4
+
+#直方图，在图表的上方增加细条图,显示小费随着总账单的变化关系
+def gm11():
+    df = px.data.tips()
+    fig =px.histogram(df, x="total_bill", y="tip", color="sex", marginal="rug",
+             hover_data=df.columns)
+    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return graphJSON
+
+#12箱形图，设置使用槽口绘制框,显示天数账单和是否吸烟的关系
+def gm12():
+    df = px.data.tips()
+    fig =px.box(df, x="day", y="total_bill", color="smoker", notched=True)
+    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return graphJSON
 #5 2013年蒙特利尔市长选举,不同区域结果图
 def gm5():
     df=px.data.election()

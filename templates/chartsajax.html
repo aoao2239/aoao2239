@@ -18,90 +18,148 @@
 
 </head>
 
-<body style="font-family:arial, sans-serif">
-  <div>  <h1>1.鸢尾花的花萼长和花萼宽</h1>
-    <h2>1.1请输入花的种类编号:1、2、3 来分别查看不同种类的画的花萼长和宽的散点图</h2>
+<body style="font-family:华文中宋">
+  <div> 
+  	<h1>1.鸢尾花的花萼长和花萼宽</h1>
+    <h2>1.1请输入花的种类编号:1、2、3 来分别查看不同种类鸢尾花的花萼长和宽的散点图</h2>
     <input type="text" id="fname" name="fname" onchange="cb(this.value)">
     <div id="chart" class="chart"></div>
-<script>
-    d = {{ graphJSON | safe }} ;
-    Plotly.newPlot('chart', d, {});
-</script>
- <div id="chart3" class="chart"></div>
+	<script>
+	    d = {{ graphJSON | safe }} ;
+	    Plotly.newPlot('chart', d, {});
+	</script>
+	<h2>1.2 三种鸢尾花分布总图</h2>
+ 	<div id="chart3" class="chart"></div>
+ 	<p>由散点图可知不同种类的鸢尾花的大致分布情况,
+ 		而右侧的细条图和上侧的直方图,则十分清晰的描
+ 		述了不同品种的鸢尾花的花萼的宽和长的分布区间。
+ 	</p>
+ 	<p>主要分布:<br>
+ 		setosa品种花萼:长4.2-5.8,宽3-4.6<br>
+ 		versicolor品种花萼:长4.9-7,宽2-3.4<br>
+ 		virginica品种花萼:长4.9-7.9,宽2.2-3.8
+ 		</p>
 
-<script>
-    d3 = {{ graphJSON3 | safe }} ;
-    Plotly.newPlot('chart3', d3, {});
-</script>
+	<script>
+	    d3 = {{ graphJSON3 | safe }} ;
+	    Plotly.newPlot('chart3', d3, {});
+	    
+	</script>
 
 </div>
 
 <div>
- <h1>1.3鸢尾花散点分布矩阵图</h1>
+ <h2>1.3鸢尾花散点分布矩阵图</h2>
     <div id="chart6" class="chart"></div>
 <script>
     d6 = {{ graphJSON6 | safe }} ;
     Plotly.newPlot('chart6', d6, {});
 </script>
+<p>
+	通过散点矩阵图可以清晰并直观的反应鸢尾花各个品种的花萼
+	长和宽的分布情况。
+</p>
 </div>
 
 <div>
- <h1>1.2鸢尾花等高线分布图</h1>
+ <h2>1.4鸢尾花等高线分布图</h2>
     <div id="chart8" class="chart"></div>
 <script>
     d8 = {{ graphJSON8 | safe }} ;
     Plotly.newPlot('chart8', d8, {});
 </script>
+<p>由等高线分布图可知，一个品种在等高线越密集的地方，那么它的分布就越集中。
+同时由每种花的等高线图也可知道，花的各自的分布范围。
+</p>
 </div>
 
 <div>
  <h1>2.国家地区人均寿命和人口之间的关系</h1>
- <h1>2.1不同地区的人均寿命</h1>
+ <h2>2.1不同地区的人均寿命</h2>
     <div id="chart7" class="chart"></div>
 <script>
     d7 = {{ graphJSON7 | safe }} ;
     Plotly.newPlot('chart7', d7, {});
 </script>
+<p>
+	点击运行之后,可以观察到,从1952年到2007年东亚地区的平均人口寿命逐渐增长，中国人的人均寿命由44增长为72.9,而北美洲地区的人口寿命为80左右,几乎没变。
+</p>
 </div>
 
 
 
 <div>
- <h1>2.2各地区人口逐年增长图</h1>
+ <h2>2.2各地区人口逐年增长图</h2>
     <div id="chart1" class="chart"></div>
 <script>
     d1 = {{ graphJSON1 | safe }} ;
     Plotly.newPlot('chart1', d1, {});
 </script>
+<p>
+	动态的展示了Asia人口的增长幅度，远超过其他四个州；
+	Africa州也慢慢超过Europe，而Oceania几乎无涨幅。
+</p>
 </div>
 
 <div>
- <h1>2.3基于line_geo线型地图</h1>
+ <h2>2.3基于line_geo线型地图</h2>
     <div id="chart9" class="chart"></div>
 <script>
     d9 = {{ graphJSON9 | safe }} ;
     Plotly.newPlot('chart9', d9, {});
 </script>
+<p>根据此图可知各个州的国家集中的分布情况：Africa的国家分布最密集，America国家分布较松散。</p>
 </div>
 
 
 <div>
- <h1>2.4输入年份,获取该年分的矩阵式树状结构图</h1>
+ <h2>2.4 2007年总人数在各地的矩阵式树状结构图</h2>
     <div id="chart10" class="chart"></div>
 <script>
     d10 = {{ graphJSON10 | safe }} ;
     Plotly.newPlot('chart10', d10, {});
 </script>
+<p>
+	由图可以清晰的看出,China和india的人口数量稳居第一第二,而Africa和Europe里面的国家,人口总数普遍较低。
+</p>
 </div>
 
 
 <div>
- <h1>3.订单流水图,男女消费总账单情况</h1>
+ <h1>3.订单流水图</h1>
+  <h2>3.1男女消费总账单以及消费的变化关系</h2>
     <div id="chart4" class="chart"></div>
 <script>
     d4 = {{ graphJSON4 | safe }} ;
     Plotly.newPlot('chart4', d4, {});
 </script>
+<p>
+	由图可以看到,男女的total_bill(总账单)和tip(小费)呈现了一定的线性关系,随着账单的增大,小费的金额也逐渐增大。
+	<br/>
+	女性消费总金额主要分布在10-30，小费金额在1-4；<br/>
+	男性消费总金额主要分布在10-30，小费金额在1-7；<br/>	
+	
+</p>
+
+ <h2>3.2 账单相同时男女分别给出的小费之和的比较</h2>
+    <div id="chart11" class="chart"></div>
+<script>
+    d11 = {{ graphJSON11 | safe }} ;
+    Plotly.newPlot('chart11', d11, {});
+</script>
+<p>
+	当总账单相同时,男性客户的总小费支出明显多于女性。<br/>
+	男性的账单消费也偏高。
+</p>
+ <h2>3.3不同天数的账单和吸烟人数的关系</h2>
+    <div id="chart12" class="chart"></div>
+<script>
+    d12= {{ graphJSON12 | safe }} ;
+    Plotly.newPlot('chart12', d12, {});
+</script>
+<p>
+	周六和周日的吸烟者居多,并且这两天的吸烟者的账单总量,分布明显大于不吸烟者。
+</p>
 </div>
 
 <div>
@@ -111,6 +169,9 @@
     d5 = {{ graphJSON5 | safe }} ;
     Plotly.newPlot('chart5', d5, {});
 </script>
+<p>
+	三维立方散点图，分别以Bergeron，Coderre，Joly三者的票数为坐标轴，显示当时的票数的具体分布情况。
+</p>
 </div>
 
 </body>
