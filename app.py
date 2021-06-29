@@ -52,7 +52,7 @@ person = {
         {
             'university': '湖北师范大学',
             'degree': '软件工程22届本科毕业生',
-            'description' : 'Gestion de projets IT, Audit, Programmation',
+            'description' : '计算机与信息工程学院',
             'mention' : 'aoao',
             'timeframe' : '2018- 2022'
         }
